@@ -191,8 +191,8 @@ endif
 ## Arrays
 
 ```stretch
-var my_array: int array <- [1, 2, 3, 4, 5]
-var first_number: int <- my_array[0] //indexing starts at 0
+var my_array: number array <- [1, 2, 3, 4, 5]
+var first_number: number <- my_array[0] //indexing starts at 0
 //Accessing an invalid cell of an array generates a runtime error:
 my_array[100] //runtime error !
 ```
