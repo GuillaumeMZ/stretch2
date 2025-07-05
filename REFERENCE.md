@@ -279,4 +279,4 @@ func name(in param1: type1, inout param2: type2, out param3: type3, param4: type
 
 ### Keywords list
 
-`array` `bool` `break` `continue` `do` `else` `endenum` `endfunc` `endif` `endstruct` `endwhile` `enum` `false` `func` `if` `is` `number` `read` `return` `returns` `string` `struct` `then` `true` `var` `while` `write`
+`and` `array` `bool` `break` `continue` `do` `else` `endenum` `endfunc` `endif` `endstruct` `endwhile` `enum` `false` `func` `if` `in` `inout` `is` `not` `nothing` `number` `or` `out` `read` `return` `returns` `string` `struct` `then` `true` `var` `while` `write`
