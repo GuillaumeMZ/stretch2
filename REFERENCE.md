@@ -273,6 +273,7 @@ func name(in param1: type1, inout param2: type2, out param3: type3, param4: type
 
     //if nothing is specified, then a parameter is in by default
     //in this example, param4 is in
+endfunc
 ```
 
 ## Appendixes
