@@ -7,9 +7,16 @@
 
 #include "token.hpp"
 
+struct TokenizationContext {
+    unsigned long line = 0;
+    unsigned long column = 0;
+    std::string_view source;
+    std::vector<Token> tokens;
+};
+
 struct TokenizationError {
-    int line;
-    int column;
+    unsigned long line;
+    unsigned long column;
     std::string cause;
 };
 

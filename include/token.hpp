@@ -7,7 +7,7 @@ enum class TokenType {
     //comments are ignored
     And,
     Array,
-    Arrow,
+    // there is no arrow token because of the ambiguity with "less than minus"
     Bool,
     Break,
     Comma,
@@ -65,7 +65,7 @@ enum class TokenType {
 
 using TokenData = std::variant<
     std::monostate,
-    int,
+    double,
     std::string
 >;
 
