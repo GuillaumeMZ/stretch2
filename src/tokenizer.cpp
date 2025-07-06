@@ -1,6 +1,7 @@
 #include <cctype>
 #include <map>
 #include <optional>
+#include <vector>
 
 #include "tokenizer.hpp"
 
@@ -65,7 +66,30 @@ auto TryTokenizeOperator(TokenizationContext& context) -> void {
         {"*", TokenType::Star},
     };
 
-    for (const auto& [key, value]: operators) {
+    const std::vector<std::string> ordered_operators = {
+        ",",
+        ".",
+        ">=",
+        ">",
+        "<=",
+        "<",
+        "=/=",
+        "=",
+        "[",
+        "(",
+        "-",
+        "%",
+        "+",
+        "]",
+        ")",
+        ";",
+        "/",
+        "*"
+    };
+
+    for (const auto& key: ordered_operators) {
+        const auto value = operators.at(key);
+
         if (!context.source.starts_with(key)) {
             continue;
         }
