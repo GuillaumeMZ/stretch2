@@ -66,7 +66,7 @@ auto TryTokenizeOperator(TokenizationContext& context) -> void {
         {"*", TokenType::Star},
     };
 
-    const std::vector<std::string> ordered_operators = {
+    const std::vector<std::string> ordered_operators = { //could be std array
         ",",
         ".",
         ">=",
@@ -147,7 +147,46 @@ auto TryTokenizeKeyword(TokenizationContext& context) -> void {
         {"write", TokenType::Write},
     };
 
-    for (const auto& [key, value]: keywords) {
+    const std::vector<std::string> ordered_keywords = { //could be std array
+        "and",
+        "array",
+        "bool",
+        "break",
+        "continue",
+        "do",
+        "else",
+        "endenum",
+        "endfunc",
+        "endif",
+        "endstruct",
+        "endwhile",
+        "enum",
+        "false",
+        "func",
+        "if",
+        "inout",
+        "in",
+        "is",
+        "nothing",
+        "not",
+        "number",
+        "or",
+        "out",
+        "read",
+        "returns",
+        "return",
+        "string",
+        "struct",
+        "then",
+        "true",
+        "var",
+        "while",
+        "write",
+    };
+
+    for (const auto& key: ordered_keywords) {
+        const auto value = keywords.at(key);
+
         if (!context.source.starts_with(key)) {
             continue;
         }
@@ -165,6 +204,7 @@ auto TryTokenizeKeyword(TokenizationContext& context) -> void {
         const auto length = key.length();
         context.source.remove_prefix(length);
         context.column += length;
+        break;
     }
 }
 
