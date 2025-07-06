@@ -158,6 +158,10 @@ auto TryTokenizeNumber(TokenizationContext& context) -> void {
         }
 
         if (context.source.front() == '.') {
+            if (tokenized_number.empty()) {
+                return; //first char is a ., so it is not a valid number
+            }
+
             dot_found = true;
         }
 
@@ -271,7 +275,7 @@ auto Tokenize(const std::string_view source) -> TokenizationResult {
         const auto begin_line = context.line;
         const auto begin_column = context.column;
 
-        SkipComment(context);
+        SkipComment(context); //comments must be tokenized first
         SkipNewline(context);
         SkipWhitespace(context);
         TryTokenizeNumber(context); //numbers are tokenized before operators to avoid ambiguity with the dot operator
