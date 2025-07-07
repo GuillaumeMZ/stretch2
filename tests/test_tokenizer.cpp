@@ -31,8 +31,8 @@ TEST_CASE("An integer is tokenized correctly") {
 
     const auto token = result->at(0);
 
-    REQUIRE(token.line == 0);
-    REQUIRE(token.column == 0);
+    REQUIRE(token.line == 1);
+    REQUIRE(token.column == 1);
     REQUIRE(token.type == TokenType::Number);
     REQUIRE(token.data == TokenData{123.00});
 }
@@ -47,8 +47,8 @@ TEST_CASE("A double is tokenized correctly") {
 
     const auto token = result->at(0);
 
-    REQUIRE(token.line == 0);
-    REQUIRE(token.column == 0);
+    REQUIRE(token.line == 1);
+    REQUIRE(token.column == 1);
     REQUIRE(token.type == TokenType::Number);
     REQUIRE(token.data == TokenData{123.456});
 }
@@ -63,8 +63,8 @@ TEST_CASE("A double without a decimal part is tokenized correctly") {
 
     const auto token = result->at(0);
 
-    REQUIRE(token.line == 0);
-    REQUIRE(token.column == 0);
+    REQUIRE(token.line == 1);
+    REQUIRE(token.column == 1);
     REQUIRE(token.type == TokenType::Number);
     REQUIRE(token.data == TokenData{123.0});
 }
@@ -79,8 +79,8 @@ TEST_CASE("The . operator is tokenized properly") {
 
     const auto token = result->at(0);
 
-    REQUIRE(token.line == 0);
-    REQUIRE(token.column == 0);
+    REQUIRE(token.line == 1);
+    REQUIRE(token.column == 1);
     REQUIRE(token.type == TokenType::Dot);
     REQUIRE(token.data == TokenData{std::monostate()});
 }
@@ -95,8 +95,8 @@ TEST_CASE("The >= operator is tokenized properly") {
 
     const auto token = result->at(0);
 
-    REQUIRE(token.line == 0);
-    REQUIRE(token.column == 0);
+    REQUIRE(token.line == 1);
+    REQUIRE(token.column == 1);
     REQUIRE(token.type == TokenType::GreaterOrEqual);
     REQUIRE(token.data == TokenData{std::monostate()});
 }
@@ -111,8 +111,8 @@ TEST_CASE("A keyword (i.e nothing) is tokenized properly") {
 
     const auto token = result->at(0);
 
-    REQUIRE(token.line == 0);
-    REQUIRE(token.column == 0);
+    REQUIRE(token.line == 1);
+    REQUIRE(token.column == 1);
     REQUIRE(token.type == TokenType::Nothing);
     REQUIRE(token.data == TokenData{std::monostate()});
 }
@@ -127,8 +127,8 @@ TEST_CASE("An identifier is tokenized properly") {
 
     const auto token = result->at(0);
 
-    REQUIRE(token.line == 0);
-    REQUIRE(token.column == 0);
+    REQUIRE(token.line == 1);
+    REQUIRE(token.column == 1);
     REQUIRE(token.type == TokenType::Identifier);
     REQUIRE(token.data == TokenData{"_my_var1able"});
 }
@@ -143,8 +143,8 @@ TEST_CASE("A string is tokenized properly") {
 
     const auto token = result->at(0);
 
-    REQUIRE(token.line == 0);
-    REQUIRE(token.column == 0);
+    REQUIRE(token.line == 1);
+    REQUIRE(token.column == 1);
     REQUIRE(token.type == TokenType::String);
     REQUIRE(token.data == TokenData{"hello, world !"});
 }

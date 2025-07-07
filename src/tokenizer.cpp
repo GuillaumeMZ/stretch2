@@ -18,7 +18,7 @@
     } else {
         context.source.remove_prefix(next_newline);
         context.line++;
-        context.column = 0;
+        context.column = 1;
     }
 
     return true;
@@ -29,12 +29,12 @@
     if (context.source.starts_with("\n")) {
         context.source.remove_prefix(1);
         context.line++;
-        context.column = 0;
+        context.column = 1;
         return true;
     } else if (context.source.starts_with("\r\n")) {
         context.source.remove_prefix(2);
         context.line++;
-        context.column = 0;
+        context.column = 1;
         return true;
     }
     return false;

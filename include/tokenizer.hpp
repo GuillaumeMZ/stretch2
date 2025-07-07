@@ -8,8 +8,8 @@
 #include "token.hpp"
 
 struct TokenizationContext {
-    unsigned long line = 0;
-    unsigned long column = 0;
+    unsigned long line = 1;
+    unsigned long column = 1;
     std::string_view source;
     std::vector<Token> tokens;
 };
