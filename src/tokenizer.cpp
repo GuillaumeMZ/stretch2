@@ -17,8 +17,7 @@
         context.source.remove_prefix(context.source.length());
     } else {
         context.source.remove_prefix(next_newline);
-        context.line++;
-        context.column = 1;
+        context.column += next_newline;
     }
 
     return true;
@@ -26,15 +25,20 @@
 
 //returns true if a newline has been skipped
 [[nodiscard]] auto SkipNewline(TokenizationContext& context) -> bool {
-    if (context.source.starts_with("\n")) {
-        context.source.remove_prefix(1);
+    if (context.source.starts_with("\n") || context.source.starts_with("\r\n")) {
+        const auto next_newline = context.source.find_first_of('\n');
+
+        context.tokens.push_back({
+            .line = context.line,
+            .column = context.column + next_newline,
+            .type = TokenType::LF,
+            .data = std::monostate()
+        });
+
+        context.source.remove_prefix(next_newline + 1);
         context.line++;
         context.column = 1;
-        return true;
-    } else if (context.source.starts_with("\r\n")) {
-        context.source.remove_prefix(2);
-        context.line++;
-        context.column = 1;
+
         return true;
     }
     return false;

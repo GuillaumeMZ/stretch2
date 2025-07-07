@@ -32,6 +32,7 @@ enum class TokenType {
     InOut,
     Is,
     LBracket, //square
+    LF,
     LParen,
     Minus,
     Not,
