@@ -73,8 +73,5 @@ struct Token {
     unsigned long line;
     unsigned long column;
     TokenType type;
-    TokenData token_data;
+    TokenData data;
 };
-
-
-

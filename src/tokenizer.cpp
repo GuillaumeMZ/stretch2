@@ -108,7 +108,7 @@ auto TryTokenizeOperator(TokenizationContext& context) -> void {
             .line = context.line,
             .column = context.column,
             .type = value,
-            .token_data = std::monostate()
+            .data = std::monostate()
         });
 
         const auto length = key.length();
@@ -210,7 +210,7 @@ auto TryTokenizeKeyword(TokenizationContext& context) -> void {
         }
 
     add_token:
-        context.tokens.push_back({.line = context.line, .column = context.column, .type = value, .token_data = std::monostate()});
+        context.tokens.push_back({.line = context.line, .column = context.column, .type = value, .data = std::monostate()});
         const auto length = key.length();
         context.source.remove_prefix(length);
         context.column += length;
@@ -252,7 +252,7 @@ auto TryTokenizeNumber(TokenizationContext& context) -> void {
         .line = context.line,
         .column = context.column - tokenized_number.length(),
         .type = TokenType::Number,
-        .token_data = std::stod(tokenized_number)
+        .data = std::stod(tokenized_number)
     });
 }
 
@@ -285,7 +285,7 @@ auto TryTokenizeIdentifier(TokenizationContext& context) -> void {
         .line = context.line,
         .column = context.column - tokenized_identifier.length(),
         .type = TokenType::Identifier,
-        .token_data = tokenized_identifier
+        .data = tokenized_identifier
     });
 }
 
@@ -336,7 +336,7 @@ auto TryTokenizeIdentifier(TokenizationContext& context) -> void {
         .line = context.line,
         .column = context.column - (tokenized_string.length() + 2), //+2 for the two "
         .type = TokenType::String,
-        .token_data = tokenized_string
+        .data = tokenized_string
     });
 
     return std::nullopt;
