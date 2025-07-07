@@ -353,7 +353,7 @@ auto TryTokenizeIdentifier(TokenizationContext& context) -> void {
         const auto end_line = context.line;
         const auto end_column = context.column;
 
-        if (begin_line == end_line && begin_column == end_column) {
+        if (begin_line == end_line && begin_column == end_column && !context.source.empty()) {
             return std::unexpected<TokenizationError>({
                 .line = end_line,
                 .column = end_column,
