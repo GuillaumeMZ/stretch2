@@ -5,9 +5,10 @@
 
 #include "tokenizer.hpp"
 
-auto SkipComment(TokenizationContext& context) -> void {
+//returns true if a comment has been skipped
+[[nodiscard]] auto SkipComment(TokenizationContext& context) -> bool {
     if (!context.source.starts_with("//")) {
-        return;
+        return false;
     }
 
     if (const auto next_newline = context.source.find_first_of('\n'); next_newline == std::string_view::npos) {
@@ -19,27 +20,36 @@ auto SkipComment(TokenizationContext& context) -> void {
         context.line++;
         context.column = 0;
     }
+
+    return true;
 }
 
-auto SkipNewline(TokenizationContext& context) -> void {
+//returns true if a newline has been skipped
+[[nodiscard]] auto SkipNewline(TokenizationContext& context) -> bool {
     if (context.source.starts_with("\n")) {
         context.source.remove_prefix(1);
         context.line++;
         context.column = 0;
+        return true;
     } else if (context.source.starts_with("\r\n")) {
         context.source.remove_prefix(2);
         context.line++;
         context.column = 0;
+        return true;
     }
+    return false;
 }
 
-auto SkipWhitespace(TokenizationContext& context) -> void {
+//returns true if a whitespace has been skipped
+[[nodiscard]] auto SkipWhitespace(TokenizationContext& context) -> bool {
     if (!context.source.starts_with(" ") && !context.source.starts_with("\t")) {
-        return;
+        return false;
     }
 
     context.source.remove_prefix(1);
     context.column++;
+
+    return true;
 }
 
 auto TryTokenizeOperator(TokenizationContext& context) -> void {
@@ -339,9 +349,15 @@ auto TryTokenizeIdentifier(TokenizationContext& context) -> void {
         const auto begin_line = context.line;
         const auto begin_column = context.column;
 
-        SkipComment(context); //comments must be tokenized first
-        SkipNewline(context);
-        SkipWhitespace(context);
+        if (SkipComment(context)) { //comments must be tokenized first
+            continue;
+        }
+        if (SkipNewline(context)) {
+            continue;
+        }
+        if (SkipWhitespace(context)) {
+            continue;
+        }
         TryTokenizeNumber(context); //numbers are tokenized before operators to avoid ambiguity with the dot operator
         TryTokenizeOperator(context);
         TryTokenizeKeyword(context);
