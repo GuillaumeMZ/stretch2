@@ -15,8 +15,8 @@ This project is divided in four parts:
 - The bytecode generator
 - The virtual machine
 
-Tests are in the `tests` directory.
+Tests are in the `tests` directory and use the [Catch2 test framework](https://github.com/catchorg/Catch2).
 
 ## Known issues
 
-The tokenizer currently stops its work at the first error it encounters. This behavior will be changed in the future.
+The tokenizer currently stops its work at the first error it encounters.
