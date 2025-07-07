@@ -22,4 +22,4 @@ struct TokenizationError {
 
 using TokenizationResult = std::expected<std::vector<Token>, TokenizationError>;
 
-auto Tokenize(std::string_view source) -> TokenizationResult;
+[[nodiscard]] auto Tokenize(std::string_view source) -> TokenizationResult;

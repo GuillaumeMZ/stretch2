@@ -280,7 +280,7 @@ auto TryTokenizeIdentifier(TokenizationContext& context) -> void {
 }
 
 //returns a TokenizationError if the string isn't terminated before a newline/eof
-auto TryTokenizeString(TokenizationContext& context) -> std::optional<TokenizationError> {
+[[nodiscard]] auto TryTokenizeString(TokenizationContext& context) -> std::optional<TokenizationError> {
     if (context.source.empty()) {
         return std::nullopt;
     }
@@ -332,7 +332,7 @@ auto TryTokenizeString(TokenizationContext& context) -> std::optional<Tokenizati
     return std::nullopt;
 }
 
-auto Tokenize(const std::string_view source) -> TokenizationResult {
+[[nodiscard]] auto Tokenize(const std::string_view source) -> TokenizationResult {
     TokenizationContext context { .source = source };
 
     while (!context.source.empty()) {
@@ -345,7 +345,9 @@ auto Tokenize(const std::string_view source) -> TokenizationResult {
         TryTokenizeNumber(context); //numbers are tokenized before operators to avoid ambiguity with the dot operator
         TryTokenizeOperator(context);
         TryTokenizeKeyword(context);
-        TryTokenizeString(context);
+        if (auto string_tokenization_result = TryTokenizeString(context); string_tokenization_result.has_value()) {
+            return std::unexpected(string_tokenization_result.value());
+        }
         TryTokenizeIdentifier(context);
 
         const auto end_line = context.line;
