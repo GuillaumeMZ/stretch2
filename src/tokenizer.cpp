@@ -1,6 +1,6 @@
 #include <cctype>
-#include <map>
 #include <optional>
+#include <utility> //std::pair
 #include <vector>
 
 #include "tokenizer.hpp"
@@ -59,7 +59,7 @@
 auto TryTokenizeOperator(TokenizationContext& context) -> void {
     //order is specific to match the longest first
     //for instance, =/= and = : if = was first, =/= would never be matched
-    const std::map<std::string, TokenType> operators = {
+    const std::vector<std::pair<std::string, TokenType>> operators = {
         {",", TokenType::Comma},
         {".", TokenType::Dot},
         {">=", TokenType::GreaterOrEqual},
@@ -80,30 +80,7 @@ auto TryTokenizeOperator(TokenizationContext& context) -> void {
         {"*", TokenType::Star},
     };
 
-    const std::vector<std::string> ordered_operators = { //could be std array
-        ",",
-        ".",
-        ">=",
-        ">",
-        "<=",
-        "<",
-        "=/=",
-        "=",
-        "[",
-        "(",
-        "-",
-        "%",
-        "+",
-        "]",
-        ")",
-        ";",
-        "/",
-        "*"
-    };
-
-    for (const auto& key: ordered_operators) {
-        const auto value = operators.at(key);
-
+    for (const auto& [key, value]: operators) {
         if (!context.source.starts_with(key)) {
             continue;
         }
@@ -124,7 +101,7 @@ auto TryTokenizeOperator(TokenizationContext& context) -> void {
 }
 
 auto TryTokenizeKeyword(TokenizationContext& context) -> void {
-    const std::map<std::string, TokenType> keywords = {
+    const std::vector<std::pair<std::string, TokenType>> keywords = {
         {"and", TokenType::And},
         {"array", TokenType::Array},
         {"bool", TokenType::Bool},
@@ -161,46 +138,7 @@ auto TryTokenizeKeyword(TokenizationContext& context) -> void {
         {"write", TokenType::Write},
     };
 
-    const std::vector<std::string> ordered_keywords = { //could be std array
-        "and",
-        "array",
-        "bool",
-        "break",
-        "continue",
-        "do",
-        "else",
-        "endenum",
-        "endfunc",
-        "endif",
-        "endstruct",
-        "endwhile",
-        "enum",
-        "false",
-        "func",
-        "if",
-        "inout",
-        "in",
-        "is",
-        "nothing",
-        "not",
-        "number",
-        "or",
-        "out",
-        "read",
-        "returns",
-        "return",
-        "string",
-        "struct",
-        "then",
-        "true",
-        "var",
-        "while",
-        "write",
-    };
-
-    for (const auto& key: ordered_keywords) {
-        const auto value = keywords.at(key);
-
+    for (const auto& [key, value]: keywords) {
         if (!context.source.starts_with(key)) {
             continue;
         }
