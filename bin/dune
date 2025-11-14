@@ -1,0 +1,3 @@
+(executable 
+ (name stretchc)
+ (libraries stretch2))

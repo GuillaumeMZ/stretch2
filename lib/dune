@@ -1,0 +1,7 @@
+(library
+ (name stretch2))
+
+(ocamllex lexer)
+
+(menhir
+ (modules parser))
