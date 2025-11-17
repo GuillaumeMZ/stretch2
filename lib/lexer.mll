@@ -1,6 +1,6 @@
 {
-    open Lexing
-    open Parser
+  open Lexing
+  open Parser
 }
 
 let white = [' ' '\t']+
@@ -8,11 +8,7 @@ let newline = '\n' | '\r' | "\r\n"
 
 let semicolon = ';'
 
-let digit = ['0'-'9']
-let sign = ['+' '-']
-let number = sign? digit+
-
-let identifier = ['a'-'z' 'A'-'Z' '_'] ['a'-'z' 'A'-'Z' '0'-'9' '_']*
+let number = ['0'-'9']+
 
 rule read = parse
 | white { read lexbuf }
@@ -21,6 +17,10 @@ rule read = parse
 | "(" { LPAREN }
 | ")" { RPAREN }
 | ";" { SEMICOLON }
-| number { NUMBER (Lexing.lexeme lexbuf |> int_of_string) }
+| "+" { PLUS }
+| "-" { MINUS }
+| "/" { SLASH }
+| "*" { STAR }
+| number as n { NUMBER (int_of_string n) }
 | eof { EOF }
 | _ as c { failwith (Printf.sprintf "Unexpected char: %C" c) }
