@@ -2,15 +2,20 @@
   open Ast
 %}
 
-%token PRINT
+%token ARROW
+%token EOF
+%token <string> IDENT
 %token LPAREN
+%token MINUS
+%token <int> NUMBER
+%token PLUS 
+%token PRINT
 %token RPAREN
 %token SEMICOLON
-%token EOF
-%token STAR SLASH
-%token PLUS MINUS
+%token SLASH
+%token STAR
 %token UNARYMINUS
-%token <int> NUMBER
+%token VAR
 
 %left PLUS MINUS
 %left STAR SLASH
@@ -20,12 +25,14 @@
 %%
 
 let parse := 
-  prints=print_instruction*; EOF; { prints }
+  prints=instruction*; EOF; { prints }
 
-let print_instruction :=
-  PRINT; LPAREN; e=expression; RPAREN; SEMICOLON; { Print e }
+let instruction :=
+  | PRINT; LPAREN; e=expression; RPAREN; SEMICOLON; { Print e }
+  | VAR; i=IDENT; ARROW; e=expression; SEMICOLON; { Var (i, e) }
 
 let expression :=
+  | i=IDENT; { Ident i }
   | LPAREN; e=expression; RPAREN; { Parenthesized e }
   | MINUS; e=expression; %prec UNARYMINUS { Negate e } 
   | lhs=expression; STAR; rhs=expression; { Multiplication (lhs, rhs) }
